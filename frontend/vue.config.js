@@ -5,6 +5,10 @@ module.exports = defineConfig({
 
 module.exports = {
   pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: './sw.js' // Path to your custom service worker file
+    },
     manifestOptions: {
       "name": "AON5 Notes",
       "short_name": "Notes",

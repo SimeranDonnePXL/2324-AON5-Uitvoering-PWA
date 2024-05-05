@@ -2,7 +2,10 @@
 
 import { register } from 'register-service-worker'
 
-if (process.env.NODE_ENV === 'production') {
+//navigator is een js object met alle informatie over de browser
+//in de if else statement hieronder kijken we of de browser een property heeft genaamd service worker
+//dus we kijken of de browser service workers support of niet.
+if('serviceWorker' in navigator){
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
       console.log(
@@ -30,3 +33,4 @@ if (process.env.NODE_ENV === 'production') {
     }
   })
 }
+

@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 
 export const useGlobalStore = defineStore('global', {
   state: () => {
@@ -9,16 +8,39 @@ export const useGlobalStore = defineStore('global', {
   },
   actions: {
     async getAllNotes() {
-      const response = (await axios.get("http://localhost:8091/notes")).data;
-      response.reverse();
-      this.notes = response;
+      try {
+        const response = await fetch("http://localhost:8091/notes");
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        this.notes = await response.json();
+        this.notes.reverse();
+      }
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
     },
-    async addNote(note){
+    async addNote(note) {
       const requestBody = {
         note: note
       }
 
-      await axios.post("http://localhost:8091/notes/add", requestBody);
+      try {
+        const response = await fetch("http://localhost:8091/notes/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        console.error('Error posting data:', error);
+      }
     }
   }
 })
