@@ -5,9 +5,22 @@ module.exports = defineConfig({
 
 module.exports = {
   pwa: {
-    workboxPluginMode: 'InjectManifest',
+    workboxPluginMode: 'GenerateSW',
     workboxOptions: {
-      swSrc: './sw.js' // Path to your custom service worker file
+      navigateFallback: '/index.html', 
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp('^http://localhost:'),
+          handler: 'NetworkFirst',
+          options: {
+            networkTimeoutSeconds: 20,
+            cacheName: 'aon5-note-cache',
+            cacheableResponse: {
+              statuses:[0,200] 
+            }, 
+          }
+        }
+      ]
     },
     manifestOptions: {
       "name": "AON5 Notes",

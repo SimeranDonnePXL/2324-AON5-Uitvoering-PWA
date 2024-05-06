@@ -6,7 +6,7 @@ import { register } from 'register-service-worker'
 //in de if else statement hieronder kijken we of de browser een property heeft genaamd service worker
 //dus we kijken of de browser service workers support of niet.
 if('serviceWorker' in navigator){
-  register(`${process.env.BASE_URL}service-worker.js`, {
+  register(`/service-worker.js`, {
     ready () {
       console.log(
         'App is being served from cache by a service worker.\n' +
