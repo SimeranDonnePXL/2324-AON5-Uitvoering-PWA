@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+
 module.exports = defineConfig({
   transpileDependencies: true
 })
@@ -17,7 +18,21 @@ module.exports = {
             cacheName: 'aon5-note-cache',
             cacheableResponse: {
               statuses:[0,200] 
-            }, 
+            },
+          }
+        },
+        {
+          urlPattern: new RegExp('^http://localhost:'),
+          handler: 'NetworkOnly',
+          method: 'POST',
+          options: {
+            backgroundSync: {
+              name: 'queue-aon5',
+              options: {
+                maxRetentionTime: 60 * 60 * 24,
+                forceSyncFallback: true,
+              }
+            },
           }
         }
       ]

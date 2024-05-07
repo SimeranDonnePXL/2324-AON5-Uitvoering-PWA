@@ -18,7 +18,7 @@ export default {
     },
     methods:{
         async addNote(){
-            await this.global.addNote(this.note);
+            await this.global.addNoteSync(this.note);
             this.note = "";
             this.$emit("noteAdded", true);
         }
